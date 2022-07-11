@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:wm_cc/general/utils/datetime_utils.dart';
+import 'package:wm_cc/general/utils/general_utils.dart';
 
 class CurrentDateView extends StatefulWidget{
   final DateChangeListener cb;
@@ -30,10 +31,20 @@ class CurrentDateViewState extends State<CurrentDateView>{
               lastDate: DateTime(2100));
           DateFormat formatter = DateFormat("dd/MM/yyyy");
           DateFormat formatter2 = DateFormat("yyyy-MM-dd");
-          widget.cb(formatter2.format(date!)==DateTimeUtils.getCurrentDate()? "Today":formatter2.format(date));
-          setState((){
-            mDate = formatter2.format(date!)==DateTimeUtils.getCurrentDate()? "Today": formatter.format(date);
-          });
+          if(date != null) {
+            if(DateTimeUtils.isFuture(date.millisecondsSinceEpoch)){
+              GeneralUtils.showMsg(context, "You're going Future! Pls Choose current and past.", false);
+            }else{
+              widget.cb(formatter2.format(date) == DateTimeUtils.getCurrentDate()
+                  ? "Today"
+                  : formatter2.format(date));
+              setState(() {
+                mDate = formatter2.format(date!) == DateTimeUtils.getCurrentDate()
+                    ? "Today"
+                    : formatter.format(date);
+              });
+            }
+          }
         },
         child: Container(
           child: Row(

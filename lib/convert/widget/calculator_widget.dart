@@ -93,7 +93,7 @@ class CalculatorWidgetState extends State<CalculatorWidget>{
                                       from: widget.clickFrom,
                                       to: widget.otherCurrency,
                                       amount: controller.text,
-                                      date: SessionManager.getInstance().getLastConvertDate());
+                                      date: SessionManager.getLastConvertDate());
                                   Navigator.pop(context);
                                 }else{
                                   controller.text = "Error";

@@ -7,6 +7,7 @@ import 'package:wm_cc/general/utils/datetime_utils.dart';
 import 'package:wm_cc/general/utils/general_utils.dart';
 import 'package:wm_cc/live/bloc/live_rate_bloc.dart';
 import 'package:wm_cc/live/widget/reload_btn.dart';
+import 'package:wm_cc/live/widget/shimmer_loading.dart';
 
 import '../../convert/model/convert_item_model.dart';
 
@@ -14,7 +15,7 @@ class RateResultList extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 13.h),
+      margin: EdgeInsets.only(top: 12.h),
       padding: EdgeInsets.only(bottom: 8.h),
       child: BlocBuilder<LiveRateBloc, LiveRateState>(
         builder: (context, state) {
@@ -54,7 +55,7 @@ class RateResultList extends StatelessWidget{
                                 ],
                               ),
                             ),
-                            Text(state.rates[index].value, style: TextStyle(fontSize: 16),)
+                            Text(state.rates[index].value, style: TextStyle(fontSize: 14.sp),)
                           ],
                         ),
                       ),
@@ -63,7 +64,7 @@ class RateResultList extends StatelessWidget{
                 },
               );
             default:
-              return const Center(child: CircularProgressIndicator());
+              return const ShimmerLoadingWidget();
           }
         },
       ),

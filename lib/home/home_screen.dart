@@ -4,7 +4,6 @@ import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:wm_cc/live/live_rates_screen.dart';
 
 import '../convert/convert_screen.dart';
-import '../convert/widget/calculator_widget.dart';
 
 class HomeScreen extends StatefulWidget{
 

@@ -80,14 +80,14 @@ class SelectableCurrencyList extends StatelessWidget{
                       from: otherCurrency,
                       to: currentCurrency,
                       amount: currentAmount,
-                      date: SessionManager.getInstance().getLastConvertDate());
+                      date: SessionManager.getLastConvertDate());
                 }else{
                   // value -> other
                   ConverterPresenter().convertCurrencyByDate(context, true,
                       from: value,
                       to: otherCurrency,
                       amount: currentAmount,
-                      date: SessionManager.getInstance().getLastConvertDate());
+                      date: SessionManager.getLastConvertDate());
                 }
               })
             ],

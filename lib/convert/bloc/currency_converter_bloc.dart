@@ -22,6 +22,9 @@ class CurrencyConverterBloc extends Bloc<CurrencyConverterEvent, ConverterState>
 
     on<ConvertCurrencyByDate> ((event, emit) async {
       dataList = [];
+      emit(state.copyWith(
+          status: ConverterStatus.initial,
+      ));
       try{
         if(event.date=="Today"){
           ConvertRes res = await api.covertCurrency(event.from, event.to, event.amount);

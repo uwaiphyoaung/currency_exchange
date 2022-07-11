@@ -19,12 +19,27 @@ class DateTimeUtils{
     return DateFormat('dd-MMM-yyyy').format(d);
   }
 
+  static String getDateFromMiliSecondsTimestamp(int data){
+    var d = DateTime.fromMillisecondsSinceEpoch(data);
+    return DateFormat('dd-MMM-yyyy:hh:mm:ss').format(d);
+  }
+
   static bool canCheckRates(int lastSyncTime){
-    print("$lastSyncTime");
-    DateTime now = DateTime.now();
-    Duration difference = now.difference(DateTime.fromMillisecondsSinceEpoch(lastSyncTime  * 1000));
+    print("${getDateFromMiliSecondsTimestamp(lastSyncTime)}");
+    Duration difference = DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(lastSyncTime));
     print("Differ ${difference.inMinutes}");
     if (difference.inMinutes > 30) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static bool isFuture(int lastSyncTime){
+    print("${getDateFromMiliSecondsTimestamp(lastSyncTime)}");
+    Duration difference = DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(lastSyncTime));
+    print("Differ ${difference.inMinutes}");
+    if (difference.inMinutes < 0) {
       return true;
     } else {
       return false;

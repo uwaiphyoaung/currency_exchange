@@ -24,13 +24,11 @@ class CurrentCurrencyViewState extends State<CurrentCurrencyView>{
         onTap: (){
           CurrencyPresenter().loadOfflineCurrency(context);
           Get.to(()=> ChooseCurrencyView(cb: (name, value){
-            SessionManager.getInstance().setLastChooseCurrencyRate(name);
-            SessionManager.getInstance().setLastChooseCurrencyDesc(value);
             LiveRatePresenter().loadRate(
                 context,
                 source:name,
                 sourceDesc:value,
-                date:SessionManager.getInstance().getLastChooseDateRate());
+                date:SessionManager.getLastChooseDateRate());
             setState((){
 
             });
@@ -46,7 +44,7 @@ class CurrentCurrencyViewState extends State<CurrentCurrencyView>{
             padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
             child: Row(
               children: [
-                Text(SessionManager.getInstance().getLastChooseCurrencyRate(), style: TextStyle(fontSize: 13.sp),),
+                Text(SessionManager.getLastChooseCurrencyRate(), style: TextStyle(fontSize: 13.sp),),
                 SizedBox(width: 7.w,),
                 const Icon(Icons.expand_more_outlined)
               ],

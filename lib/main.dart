@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:wm_cc/convert/bloc/currency_converter_bloc.dart';
 import 'package:wm_cc/currency/bloc/currency_list_bloc.dart';
+import 'package:wm_cc/general/session/session_manager.dart';
 import 'package:wm_cc/live/bloc/live_rate_bloc.dart';
 import 'general/bloc/simple_bloc_observer.dart';
 import 'home/home_screen.dart';
@@ -18,9 +19,10 @@ class MyHttpOverrides extends HttpOverrides{
   }
 }
 
-void main() {
+void main() async{
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  await SessionManager.init();
   BlocOverrides.runZoned(
         () => runApp(const MyApp()),
     blocObserver: SimpleBlocObserver(),

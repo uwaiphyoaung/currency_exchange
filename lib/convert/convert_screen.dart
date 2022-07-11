@@ -6,6 +6,7 @@ import 'package:wm_cc/convert/bloc/currency_converter_bloc.dart';
 import 'package:wm_cc/convert/presenter/convert_presenter.dart';
 import 'package:wm_cc/convert/widget/convert-sperate_item_view.dart';
 import 'package:wm_cc/convert/widget/convert_item_view.dart';
+import 'package:wm_cc/convert/widget/convert_shimmer_loading.dart';
 import 'package:wm_cc/general/session/session_manager.dart';
 
 import '../live/widget/current_date_view.dart';
@@ -29,7 +30,7 @@ class ConvertScreenState extends State<ConvertScreen>{
         elevation: 1.0,
         title: Text("Currency Converter"),
         centerTitle: true,
-        gradient: LinearGradient(colors: [Colors.orangeAccent, Colors.lightBlueAccent, Colors.blueGrey]),
+        gradient: LinearGradient(colors: [Colors.brown, Colors.lightBlueAccent, Colors.blueGrey]),
       ),
       body: SafeArea(
         child: BlocBuilder<CurrencyConverterBloc, ConverterState>(
@@ -56,7 +57,7 @@ class ConvertScreenState extends State<ConvertScreen>{
                               const SizedBox(),
                               CurrentDateView(cb: (value){
                                 print("Date Data : ${value}");
-                                SessionManager.getInstance().setLastConvertDate(value);
+                                SessionManager.setLastConvertDate(value);
                                 ConverterPresenter().convertCurrencyByDate(
                                     context,
                                     true,
@@ -95,7 +96,7 @@ class ConvertScreenState extends State<ConvertScreen>{
                                   from: state.data[0].code,
                                   to: state.data[1].code,
                                   amount: state.data[0].amount,
-                                  date: SessionManager.getInstance().getLastConvertDate());
+                                  date: SessionManager.getLastConvertDate());
                             },
                             style: ButtonStyle(
                                 padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>(
@@ -117,7 +118,7 @@ class ConvertScreenState extends State<ConvertScreen>{
                   ),
                 );
               default:
-                return const Center(child: CircularProgressIndicator());
+                return const ConvertLoadingWidget();
             }
           },
         ),
@@ -131,19 +132,19 @@ class ConvertScreenState extends State<ConvertScreen>{
   @override
   void initState() {
     super.initState();
-    SessionManager.getInstance().setLastConvertDate("Today");
+    SessionManager.setLastConvertDate("Today");
     if(data == null){
       ConverterPresenter().convertCurrencyByDate(context, true,
           from: "USD",
           to: "MMK",
           amount: "1",
-          date: SessionManager.getInstance().getLastConvertDate());
+          date: SessionManager.getLastConvertDate());
     }else{
       ConverterPresenter().convertCurrencyByDate(context, true,
           from: data!.code,
           to: data!.otherCode,
           amount: "1",
-          date: SessionManager.getInstance().getLastConvertDate());
+          date: SessionManager.getLastConvertDate());
     }
   }
 }

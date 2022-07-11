@@ -67,12 +67,6 @@ class RatesDao {
     final db = await dbProvider.database;
     final batch = db.batch();
     rates.entries.forEach((e) {
-      deleteByFilter(
-        name: e.key,
-        date: date,
-        timestamp: timestamp,
-        source: source
-      );
       batch.insert(RatesEntity.TABLE_NAME, {
         RatesEntity.COLUMN_NAME: e.key,
         RatesEntity.COLUMN_VALUE: e.value,
@@ -103,7 +97,7 @@ class RatesDao {
 
   Future<List<RatesEntity>> getAllItems() async {
     final db = await dbProvider.database;
-    List<Map<String, dynamic>> maps = await db.rawQuery('SELECT * FROM ${RatesEntity.TABLE_NAME} ORDER BY id DESC');
+    List<Map<String, dynamic>> maps = await db.rawQuery('SELECT * FROM ${RatesEntity.TABLE_NAME} ORDER BY ${RatesEntity.COLUMN_NAME}');
     return List.generate(maps.length, (i) {
       return RatesEntity(
         id: maps[i][RatesEntity.COLUMN_ID],
